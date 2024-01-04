@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">github-demo-android</string>
+    <string name="uh_oh_something_went_wrong">Uh-oh something went wrong</string>
+    <string name="user_profile">User Profile</string>
+    <string name="user_avatar">User Avatar</string>
+    <string name="public_repo">Public Repo - %1$s</string>
+    <string name="public_gists">Public Gists - %1$s</string>
+    <string name="followers">Followers - %1$s</string>
+    <string name="following">Following - %1$s</string>
+    <string name="user_dashboard">User Dashboard</string>
+    <string name="bio">Bio - %1$s</string>
+    <string name="users">Users</string>
+</resources>
