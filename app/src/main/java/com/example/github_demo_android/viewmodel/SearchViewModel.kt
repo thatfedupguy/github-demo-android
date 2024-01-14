@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.github_demo_android.api.ApiResult
 import com.example.github_demo_android.data.responseModels.User
 import com.example.github_demo_android.repo.SearchRepo
-import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -16,7 +15,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-@HiltViewModel
 class SearchViewModel @Inject constructor(
     private val repo: SearchRepo
 ): ViewModel() {

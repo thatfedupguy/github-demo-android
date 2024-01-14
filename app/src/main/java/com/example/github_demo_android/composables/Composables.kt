@@ -19,10 +19,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.Fragment
 import com.example.github_demo_android.MainActivity
 import com.example.github_demo_android.R
 import com.example.github_demo_android.ui.theme.type.interSemiBold
-import dagger.hilt.android.internal.managers.ViewComponentManager
 
 @Composable
 fun ShowToast(
@@ -54,21 +54,11 @@ fun Context.showLoader(){
     if(this is MainActivity){
         this.showLoader()
     }
-    if(this is ViewComponentManager.FragmentContextWrapper){
-        if(baseContext is MainActivity){
-            (baseContext as MainActivity).showLoader()
-        }
-    }
 }
 
 fun Context.hideLoader(){
     if(this is MainActivity){
         this.hideLoader()
-    }
-    if(this is ViewComponentManager.FragmentContextWrapper){
-        if(baseContext is MainActivity){
-            (baseContext as MainActivity).hideLoader()
-        }
     }
 }
 

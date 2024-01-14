@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
-    id("com.google.dagger.hilt.android")
 }
 
 buildscript {
@@ -15,7 +14,6 @@ buildscript {
         classpath("com.android.tools.build:gradle:8.2.0")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0-Beta2")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.48")
     }
 }
 
@@ -118,10 +116,12 @@ dependencies {
     // alternately - if using Java8, use the following instead of lifecycle-compiler
     implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
 
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
-    kapt("androidx.hilt:hilt-compiler:1.1.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    implementation ("com.google.dagger:dagger:2.48")
+    kapt("com.google.dagger:dagger-compiler:2.48")
+    implementation("com.google.dagger:dagger-android-support:2.48")
+    kapt("com.google.dagger:dagger-android-processor:2.48")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.48")
+
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
 
@@ -138,4 +138,8 @@ dependencies {
     implementation("androidx.paging:paging-runtime-ktx:$paging_version")
     implementation("androidx.paging:paging-compose:1.0.0-alpha20")
 
+}
+
+kapt {
+    generateStubs = true
 }

@@ -1,5 +1,6 @@
 package com.example.github_demo_android.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -43,12 +44,17 @@ import com.example.github_demo_android.screens.Loader
 import com.example.github_demo_android.ui.theme.backgroundColor
 import com.example.github_demo_android.ui.theme.type.interMedium
 import com.example.github_demo_android.viewmodel.UserListViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class UserListFragment : Fragment() {
 
-    private val viewModel by viewModels<UserListViewModel>()
+    @Inject lateinit var viewModel: UserListViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

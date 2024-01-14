@@ -1,13 +1,12 @@
 package com.example.github_demo_android
 
+import androidx.annotation.Nullable
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import java.math.BigDecimal
-import javax.annotation.Nullable
 import okio.Buffer
 import org.json.JSONObject
 

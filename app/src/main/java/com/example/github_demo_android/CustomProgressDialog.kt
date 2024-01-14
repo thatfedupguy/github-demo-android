@@ -5,13 +5,10 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Window
 import com.example.github_demo_android.databinding.LayoutCustomProgressBinding
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
-@ActivityScoped
 class CustomProgressDialog @Inject constructor(
-    @ActivityContext context: Context
+    context: Context
 ): Dialog(context, R.style.Custom_Progress_Dialog) {
 
     private lateinit var binding: LayoutCustomProgressBinding

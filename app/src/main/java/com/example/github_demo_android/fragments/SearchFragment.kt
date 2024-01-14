@@ -1,8 +1,8 @@
 package com.example.github_demo_android.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
@@ -14,12 +14,17 @@ import com.example.github_demo_android.navigateBack
 import com.example.github_demo_android.navigateForward
 import com.example.github_demo_android.screens.SearchScreen
 import com.example.github_demo_android.viewmodel.SearchViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class SearchFragment: Fragment() {
 
-    private val viewModel by viewModels<SearchViewModel>()
+    @Inject lateinit var viewModel: SearchViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

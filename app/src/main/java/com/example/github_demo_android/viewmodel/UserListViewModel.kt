@@ -6,17 +6,14 @@ import androidx.paging.PagingData
 import com.example.github_demo_android.data.enums.UserListType
 import com.example.github_demo_android.data.responseModels.User
 import com.example.github_demo_android.repo.UserListRepo
-import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-@HiltViewModel
 class UserListViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle,
     private val repo: UserListRepo
 ): ViewModel() {
-    private val type: UserListType = savedStateHandle["type"] ?: UserListType.FOLLOWERS
-    private val username: String = savedStateHandle["username"] ?: ""
+    private val type: UserListType = UserListType.FOLLOWERS
+    private val username: String = ""
     var users: Flow<PagingData<User>> = when(type){
         UserListType.FOLLOWERS -> {
             repo.getFollowers(username)

@@ -1,5 +1,6 @@
 package com.example.github_demo_android.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,13 +16,18 @@ import com.example.github_demo_android.navigateBack
 import com.example.github_demo_android.navigateForward
 import com.example.github_demo_android.screens.ProfileScreen
 import com.example.github_demo_android.viewmodel.ProfileViewModel
-import dagger.hilt.android.AndroidEntryPoint
+import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class ProfileFragment: Fragment() {
 
     private val args by navArgs<ProfileFragmentArgs>()
-    private val viewModel by viewModels<ProfileViewModel>()
+    @Inject lateinit var viewModel: ProfileViewModel
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        AndroidSupportInjection.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
