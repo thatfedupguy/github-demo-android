@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.github_demo_android.api.ApiResult
 import com.example.github_demo_android.data.responseModels.User
+import com.example.github_demo_android.di.IoDispatcher
 import com.example.github_demo_android.repo.ProfileRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +19,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val profileRepo: ProfileRepo
 ): ViewModel() {
 
@@ -35,7 +38,7 @@ class ProfileViewModel @Inject constructor(
                 isError = false
             )
         }
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(ioDispatcher) {
             when(val userResponse = profileRepo.getUser(username)){
                 is ApiResult.Error -> {
                     _uiState.update {

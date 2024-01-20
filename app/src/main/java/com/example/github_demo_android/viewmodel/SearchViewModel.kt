@@ -1,12 +1,16 @@
 package com.example.github_demo_android.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.github_demo_android.api.ApiResult
 import com.example.github_demo_android.data.responseModels.User
+import com.example.github_demo_android.di.IoDispatcher
+import com.example.github_demo_android.di.MainDispatcher
 import com.example.github_demo_android.repo.SearchRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -18,7 +22,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repo: SearchRepo
+    private val repo: SearchRepo,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(SearchUiState())
@@ -43,7 +48,7 @@ class SearchViewModel @Inject constructor(
             )
         }
         searchJob?.cancel()
-        searchJob = viewModelScope.launch(Dispatchers.IO) {
+        searchJob = viewModelScope.launch(ioDispatcher) {
             delay(400)
             ensureActive()
             val params = mutableMapOf<String, Any?>().apply {
