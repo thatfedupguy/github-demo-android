@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.github_demo_android.directions.SearchUserDirections
 import com.example.github_demo_android.navigateBack
@@ -17,9 +16,10 @@ import com.example.github_demo_android.viewmodel.SearchViewModel
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
-class SearchFragment: Fragment() {
+class SearchFragment : Fragment() {
 
-    @Inject lateinit var viewModel: SearchViewModel
+    @Inject
+    lateinit var viewModel: SearchViewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

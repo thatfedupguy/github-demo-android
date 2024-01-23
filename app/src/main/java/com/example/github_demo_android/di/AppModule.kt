@@ -1,16 +1,16 @@
 package com.example.github_demo_android.di
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.example.github_demo_android.Constants
-import com.example.github_demo_android.CustomProgressDialog
-import com.example.github_demo_android.MainActivity
 import com.example.github_demo_android.MoshiBuilder
+import com.example.github_demo_android.api.CacheInterceptor
+import com.example.github_demo_android.api.ForceCacheInterceptor
 import dagger.Module
 import dagger.Provides
-import javax.inject.Named
+import java.io.File
 import javax.inject.Singleton
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,11 +29,22 @@ class AppModule(
 
     @Provides
     @Singleton
-    fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor = interceptor).build()
+    fun providesOkHttpClient(interceptor: HttpLoggingInterceptor, cacheInterceptor: CacheInterceptor, forceCacheInterceptor: ForceCacheInterceptor): OkHttpClient =
+        OkHttpClient.Builder()
+            .cache(
+                Cache(
+                    File(application.applicationContext.cacheDir, "http-cache"),
+                    10L * 1024 * 1024
+                )
+            )
+            .addNetworkInterceptor(cacheInterceptor)
+            .addNetworkInterceptor(forceCacheInterceptor)
+            .addInterceptor(interceptor = interceptor).build()
 
     @Provides
     @Singleton

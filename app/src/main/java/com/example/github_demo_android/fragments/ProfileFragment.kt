@@ -4,10 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.fragment.navArgs
 import com.example.github_demo_android.data.enums.UserListType
@@ -36,6 +36,9 @@ class ProfileFragment: Fragment() {
     ) = ComposeView(requireContext()).apply {
         setContent {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            LaunchedEffect(key1 = Unit, block = {
+                viewModel.getUser(args.login)
+            })
             ProfileScreen(
                 isLoading = uiState.isLoading,
                 isError = uiState.isError,

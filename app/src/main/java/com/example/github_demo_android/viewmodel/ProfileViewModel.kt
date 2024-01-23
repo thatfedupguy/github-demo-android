@@ -19,13 +19,8 @@ class ProfileViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState = _uiState.asStateFlow()
-    val username: String = ""
 
-    init {
-        getUser()
-    }
-
-    private fun getUser(){
+    fun getUser(login: String){
         _uiState.update {
             it.copy(
                 isLoading = true,
@@ -33,7 +28,7 @@ class ProfileViewModel @Inject constructor(
             )
         }
         viewModelScope.launch(Dispatchers.IO) {
-            when(val userResponse = profileRepo.getUser(username)){
+            when(val userResponse = profileRepo.getUser(login)){
                 is ApiResult.Error -> {
                     _uiState.update {
                         it.copy(
