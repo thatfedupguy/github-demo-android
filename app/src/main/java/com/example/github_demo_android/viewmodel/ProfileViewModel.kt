@@ -21,17 +21,21 @@ class ProfileViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val profileRepo: ProfileRepo
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProfileUiState())
     val uiState = _uiState.asStateFlow()
     val username: String = savedStateHandle["login"] ?: ""
 
     init {
-        getUser()
+        if (username.isNotEmpty()) getUser() else _uiState.update {
+            it.copy(
+                isError = true
+            )
+        }
     }
 
-    private fun getUser(){
+    private fun getUser() {
         _uiState.update {
             it.copy(
                 isLoading = true,
@@ -39,7 +43,7 @@ class ProfileViewModel @Inject constructor(
             )
         }
         viewModelScope.launch(ioDispatcher) {
-            when(val userResponse = profileRepo.getUser(username)){
+            when (val userResponse = profileRepo.getUser(username)) {
                 is ApiResult.Error -> {
                     _uiState.update {
                         it.copy(
@@ -48,6 +52,7 @@ class ProfileViewModel @Inject constructor(
                         )
                     }
                 }
+
                 is ApiResult.Success -> {
                     _uiState.update {
                         it.copy(
@@ -65,5 +70,5 @@ class ProfileViewModel @Inject constructor(
 data class ProfileUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
-    val user: User ?= null,
+    val user: User? = null,
 )

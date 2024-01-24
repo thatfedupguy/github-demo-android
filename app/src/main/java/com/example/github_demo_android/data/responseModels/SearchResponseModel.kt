@@ -18,5 +18,7 @@ data class User(
     val followers: Int?,
     val following: Int?,
     val name: String?,
-    val bio: String?
+    val bio: String?,
+    // "Not found" for invalid username
+    val message: String?
 )
