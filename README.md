@@ -6,3 +6,4 @@ Here are the key points about the project-
 - UI Framework - Jetpack Compose
 - Dagger-Hilt for dependency injection
 - Paging Library
+- Unit Tests
