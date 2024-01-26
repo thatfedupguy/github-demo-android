@@ -15,11 +15,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,9 +26,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.github_demo_android.R
@@ -41,7 +38,6 @@ import com.example.github_demo_android.data.responseModels.User
 import com.example.github_demo_android.directions.SearchUserDirections
 import com.example.github_demo_android.orDefault
 import com.example.github_demo_android.ui.theme.backgroundColor
-import com.example.github_demo_android.ui.theme.secondaryColor
 import com.example.github_demo_android.ui.theme.type.interMedium
 import com.example.github_demo_android.viewmodel.SearchEvents
 
@@ -67,6 +63,7 @@ fun SearchScreen(
         SearchView(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = query,
+            placeHolder = stringResource(R.string.search_users),
             onValueChange = {
                 setEvent(SearchEvents.EditQuery(it))
             }
@@ -76,6 +73,7 @@ fun SearchScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(top = 16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
             suggestions?.let {
@@ -98,8 +96,10 @@ fun SearchScreen(
             }
             if (userNotFound && query.isNotEmpty()) {
                 Text(
-                    modifier = Modifier.fillMaxWidth().padding(16.dp),
-                    text = "Uh-oH!, No user found",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    text = stringResource(R.string.uh_oh_no_user_found),
                     style = interMedium.titleMedium.copy(
                         textAlign = TextAlign.Center
                     )
@@ -159,6 +159,8 @@ fun UserComposable(
 fun SearchView(
     modifier: Modifier = Modifier,
     text: String,
+    placeHolder: String? = null,
+    placeHolderStyle: TextStyle = interMedium.titleMedium.copy(color = Color.Gray),
     onValueChange: (String) -> Unit
 ) {
     BasicTextField(
@@ -190,7 +192,14 @@ fun SearchView(
                     painter = painterResource(id = android.R.drawable.ic_menu_search),
                     contentDescription = "Search View"
                 )
-                innerTextField()
+                Box(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    if (text.isEmpty() && placeHolder != null) {
+                        Text(text = placeHolder, style = placeHolderStyle)
+                    }
+                    innerTextField()
+                }
             }
         }
     }

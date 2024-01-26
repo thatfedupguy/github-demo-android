@@ -2,7 +2,6 @@ package com.example.github_demo_android.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,9 +20,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.github_demo_android.R
+import com.example.github_demo_android.basicClickable
 import com.example.github_demo_android.composables.HideLoader
 import com.example.github_demo_android.composables.ShowLoader
 import com.example.github_demo_android.composables.ToolbarView
@@ -124,7 +125,10 @@ fun ProfileScreen(
                         modifier = Modifier
                             .weight(1f),
                         text = stringResource(R.string.public_gists, user.public_gists.orDefault()),
-                        style = interMedium.bodyMedium.copy(color = Color.Black)
+                        style = interMedium.bodyMedium.copy(
+                            color = Color.Black,
+                            textAlign = TextAlign.End
+                        )
                     )
                 }
                 Row(
@@ -135,7 +139,7 @@ fun ProfileScreen(
                     Text(
                         modifier = Modifier
                             .weight(1f)
-                            .clickable {
+                            .basicClickable {
                                 navigate(ProfileDirections.FollowersList)
                             },
                         text = stringResource(R.string.followers, user.followers.orDefault()),
@@ -144,11 +148,14 @@ fun ProfileScreen(
                     Text(
                         modifier = Modifier
                             .weight(1f)
-                            .clickable {
+                            .basicClickable {
                                 navigate(ProfileDirections.FollowingList)
                             },
                         text = stringResource(R.string.following, user.following.orDefault()),
-                        style = interMedium.bodyMedium.copy(color = ribbonBlue)
+                        style = interMedium.bodyMedium.copy(
+                            color = ribbonBlue,
+                            textAlign = TextAlign.End
+                        )
                     )
                 }
             }

@@ -1,7 +1,5 @@
 package com.example.github_demo_android.repo.repoImpl
 
-import android.app.Application
-import android.content.Context
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
@@ -10,14 +8,12 @@ import com.example.github_demo_android.api.UserListApi
 import com.example.github_demo_android.data.responseModels.User
 import com.example.github_demo_android.paging.PagingSource
 import com.example.github_demo_android.repo.UserListRepo
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 
 class UserListRepoImpl @Inject constructor(
-    private val apiService: ApiService,
-    val app: Application
+    private val apiService: ApiService
 ) : UserListRepo {
 
     val api = apiService.buildService(UserListApi::class.java)
@@ -33,9 +29,9 @@ class UserListRepoImpl @Inject constructor(
                 initialLoadSize = 20
             ),
             pagingSourceFactory = {
-                PagingSource(app) { pageCount, pageSize, _ ->
+                PagingSource { pageCount, pageSize, _ ->
                     api.getFollowers(
-                        username= username,
+                        username = username,
                         pageSize = pageSize,
                         page = pageCount
                     ).body()?.toList().orEmpty()
@@ -55,7 +51,7 @@ class UserListRepoImpl @Inject constructor(
                 initialLoadSize = 20
             ),
             pagingSourceFactory = {
-                PagingSource(app) { pageCount, pageSize, _ ->
+                PagingSource { pageCount, pageSize, _ ->
                     api.getFollowingList(
                         username = username,
                         pageSize = pageSize,

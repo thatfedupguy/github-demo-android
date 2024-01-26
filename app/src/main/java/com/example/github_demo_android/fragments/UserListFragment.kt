@@ -7,7 +7,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -70,16 +69,15 @@ class UserListFragment : Fragment() {
                         navigateBack()
                     }
                 )
-                Box(
+                Column(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     if ((itemCount == 0) && loadState.append is LoadState.NotLoading && loadState.append.endOfPaginationReached) {
                         Text(
-                            context.getString(R.string.uh_oh_something_went_wrong),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.Center)
+                            "No User Found!",
+                            style = interMedium.titleMedium
                         )
                     } else {
                         LazyColumn(
@@ -153,7 +151,10 @@ class UserListFragment : Fragment() {
             }
 
             loadState?.refresh is LoadState.Error || loadState?.append is LoadState.Error -> {
-                Text(stringResource(id = R.string.uh_oh_something_went_wrong))
+                Text(
+                    stringResource(id = R.string.uh_oh_something_went_wrong),
+                    style = interMedium.titleMedium
+                )
             }
         }
     }

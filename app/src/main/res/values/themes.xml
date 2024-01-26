@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Githubdemoandroid" parent="Theme.MaterialComponents.Light.NoActionBar" />
+    <style name="Theme.Githubdemoandroid" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/secondary</item>
+    </style>
 
     <style name="Custom.Progress.Dialog" parent="android:Theme.Holo.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="Theme.SplashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/secondary</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 </resources>

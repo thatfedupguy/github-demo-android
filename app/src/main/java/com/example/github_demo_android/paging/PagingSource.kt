@@ -1,13 +1,11 @@
 package com.example.github_demo_android.paging
 
-import android.content.Context
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import javax.inject.Singleton
 
 @Singleton
-class PagingSource<T : Any> constructor(
-    private val context: Context,
+class PagingSource<T : Any>(
     private val block: suspend (pageCount: Int, pageSize: Int, placeholdersEnabled: Boolean) -> List<T>,
 ) : PagingSource<Int, T>() {
 
@@ -19,12 +17,12 @@ class PagingSource<T : Any> constructor(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, T> {
-        val page = params.key ?: 0
+        val page = params.key ?: 1
         return try {
             val response = block(page, params.loadSize, params.placeholdersEnabled)
             LoadResult.Page(
                 data = response,
-                prevKey = if (page == 0) null else page - 1,
+                prevKey = if (page == 1) null else page - 1,
                 nextKey = if (response.isEmpty()) null else page + 1
             )
         } catch (exception: Exception) {
