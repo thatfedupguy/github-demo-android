@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.kapt")
@@ -34,6 +37,10 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val buildProperty = Properties()
+        buildProperty.load(FileInputStream(rootProject.file("build.property")))
+        buildConfigField(type = "String", name = "BASE_URL", buildProperty.getProperty("BASE_URL"))
     }
 
     buildTypes {
@@ -55,6 +62,7 @@ android {
     buildFeatures {
         compose = true
         viewBinding = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.7"

@@ -1,5 +1,7 @@
-package com.example.github_demo_android
+package com.example.github_demo_android.di
 
+import com.example.github_demo_android.BuildConfig
+import com.example.github_demo_android.MoshiBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +30,7 @@ object AppModule {
     fun providesRetrofitClient(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .addConverterFactory(MoshiConverterFactory.create(MoshiBuilder.getInstance()))
-        .baseUrl(Constants.BASE_URL)
+        .baseUrl(BuildConfig.BASE_URL)
         .client(okHttpClient)
         .build()
 }
