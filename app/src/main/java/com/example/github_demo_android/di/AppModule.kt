@@ -19,11 +19,18 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+    fun providesHttpLoggingInterceptor(): HttpLoggingInterceptor =
+        HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     @Provides
     @Singleton
-    fun providesOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient = OkHttpClient.Builder().addInterceptor(interceptor = interceptor).build()
+    fun providesOkHttpClient(
+        interceptor: HttpLoggingInterceptor
+    ): OkHttpClient =
+        OkHttpClient
+            .Builder()
+            .addInterceptor(interceptor = interceptor)
+            .build()
 
     @Provides
     @Singleton
